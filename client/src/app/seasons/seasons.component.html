@@ -1,0 +1,51 @@
+<p>
+  seasons works!
+</p>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <th>Season_Name</th>
+      <th>Season_Data</th>
+      <th>Starts_On</th>
+       <th>Ends_On</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Season; let i = index">
+        <td>{{item.Season_Name}}</td>
+        <td>{{item.Season_Data}}</td>
+         <td>{{item.Starts_On}}</td>
+         <td>{{item.Ends_On}}</td>
+         <button class="btn btn-success" (click)="OpenEditTab(item._id)">EDIT</button><td></td>
+         <button class="btn btn-danger" (click)="DeleteSeason(item._id)"> DELETE</button>
+      </tr>
+    </tbody>
+  </table>
+ <button class="btn btn-success" (click)="OpenEditor()">ADD NEW SEASON</button> 
+</div>
+<div *ngIf="!flag">
+<div class="container">
+  
+    <form (ngSubmit)='UpdateSeason()' #DetailsForm='ngForm'>
+    <input type="text" name="Season" #Series placeholder="Enter new season name" [(ngModel)]="NewSeason.Season_Name">
+    <input type="text" name="Data" #Data placeholder="Enter Data" [(ngModel)]="NewSeason.Season_Data">
+    <!--<input type="text" name="Starts_On" #Starts placeholder="Enter Starts_On Date" [(ngModel)]="NewSeason.Starts_On">
+    <input type="text" name="Ends_On" #Data placeholder="Enter Ends_On Date" [(ngModel)]="NewSeason.Ends_On">-->
+    <label>StartS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Starts_On"></ng2-datepicker>
+    <label>EndS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Ends_On"></ng2-datepicker>
+    <button>UPDATE</button>
+  </form>
+</div>
+</div>
+<div *ngIf="!flag2">
+<div class="container">
+  
+    <form (ngSubmit)='AddSeason()' #DetailsForm='ngForm'>
+    <input type="text" name="Series" #Series placeholder="Enter the season name" [(ngModel)]="NewSeason.Season_Name">
+    <input type="text" name="Data" #Data placeholder="Enter Data" [(ngModel)]="NewSeason.Season_Data">
+    <label>StartS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Starts_On"></ng2-datepicker>
+    <label>EndS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Ends_On"></ng2-datepicker>
+    <button>PROCEED</button>
+  </form>
+</div>
+</div>
+

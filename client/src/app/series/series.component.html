@@ -1,0 +1,41 @@
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <th>Series_ID</th>
+      <th>Series_Name</th>
+      <th>Series_Data</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Series; let i = index">
+        <td>{{item.Series_ID}}</td>
+        <td>{{item.Series_Name}}</td>
+         <td>{{item.Series_Data}}</td>
+         <button class="btn btn-success" (click)="OpenEditTab(item._id)">EDIT</button><td></td>
+         <button class="btn btn-danger" (click)="DeleteSeries(item._id)"> DELETE</button>
+      </tr>
+    </tbody>
+  </table>
+ <button class="btn btn-success" (click)="OpenEditor()">ADD NEW SERIES</button> 
+</div>
+<div *ngIf="!flag">
+<div class="container">
+  
+    <form (ngSubmit)='UpdateSeries()' #DetailsForm='ngForm'>
+    <input type="text" name="Series" #Series placeholder="Enter series name" [(ngModel)]="EditSeries.Series_Name">
+    <input type="text" name="Data" #Data placeholder="Enter Data" [(ngModel)]="EditSeries.Series_Data">
+    <button>UPDATE</button>
+  </form>
+</div>
+</div>
+<div *ngIf="!flag2">
+<div class="container">
+  
+    <form (ngSubmit)='AddSeries()' #DetailsForm='ngForm'>
+    <input type="text" name="Series" #Series placeholder="Enter new series name" [(ngModel)]="EditSeries.Series_Name">
+    <input type="text" name="Data" #Data placeholder="Enter new Data" [(ngModel)]="EditSeries.Series_Data">
+    <button>PROCEED</button>
+  </form>
+</div>
+</div>
+

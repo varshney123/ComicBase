@@ -1,0 +1,16 @@
+<!--<p>
+  user works!
+</p>-->
+<div [style.color]="'grey'">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3 align="center">COMICS</h3>
+      <div class="well well-lg">
+        <div>
+          <ul *ngFor="let item of Comics; let i = index">
+              <li>{{item.Comic_Name}}</li> 
+          </ul>
+        </div>
+      </div>
+    </div>
+    

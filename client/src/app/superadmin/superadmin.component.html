@@ -1,0 +1,51 @@
+
+<div class="well">  
+</div>
+<div>
+  <table class="table table-striped">
+    <thead>
+      <th>UserName</th>
+      <th>Password</th>
+      <th>Type</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Users; let i = index">
+        <td>{{item.username}}</td>
+        <td>{{item.password}}</td>
+         <td>{{item.UserType_ID}}</td>
+         <button class="btn btn-success" (click)="OpenEditTab(item.username)">EDIT</button><td></td>
+         <button class="btn btn-danger" (click)="DeleteUsers(item.username)"> DELETE</button>
+      </tr>
+    </tbody>
+  </table>
+ <button class="btn btn-success" (click)="OpenEditor()">ADD NEW USER</button> 
+</div>
+<div *ngIf="!flag">
+<div class="container">
+  
+     <form (ngSubmit)='Updateuser()' #DetailsForm='ngForm'>
+       <label>Enter the new password:</label>
+    <input type="text" name="password" #password placeholder="Enter the new password" [(ngModel)]="EditUser.password">
+       <label>Enter Type Admin Or User:</label>
+    <input type="text" name="type" #type placeholder="Enter Type" [(ngModel)]="EditUser.UserType_ID">
+   
+    <button class="btn btn-success">Update</button>
+  </form>
+</div>
+</div>
+<div *ngIf="!flag2">
+<div class="container">
+  
+     <form (ngSubmit)='AddUser()' #DetailsForm='ngForm'>
+       <label>Enter new Username:</label>
+    <input type="text" name="username" #password placeholder="Enter new username" [(ngModel)]="EditUser.username">
+       <label>Enter  new password:</label>
+    <input type="text" name="password" #password placeholder="Enter new password" [(ngModel)]="EditUser.password">
+       <label>Enter Type Admin Or User:</label>
+    <input type="text" name="type" #type placeholder="Enter Type" [(ngModel)]="EditUser.UserType_ID">
+   
+    <button class="btn btn-success">Submit</button>
+  </form>
+</div>
+</div>
+

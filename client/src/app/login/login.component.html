@@ -1,0 +1,12 @@
+<!--<p>
+  login works!
+</p>-->
+<form #form1="ngForm" (ngSubmit)="check(form1)">
+  <label>Username</label>
+  <input type="text" name="username" [(ngModel)]="user" #username="ngModel" placeholder="Enter your Username" >
+  <label>Password</label>
+  <input type="password" name="password" [(ngModel)]="pass" #password="ngModel" placeholder="Enter your Password" >
+  <button type="submit" class="btn btn-primary">
+  <span></span>Login
+  </button>
+</form> 
