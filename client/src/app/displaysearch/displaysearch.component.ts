@@ -7,15 +7,15 @@ import { Router } from "@angular/router";
   styleUrls: ['./displaysearch.component.css']
 })
 export class DisplaysearchComponent implements OnInit {
-    searchResults: any;
-   constructor(public send:ExchangeserviceService,public route2:Router) { }
-newSearch(){
-this.route2.navigate(['/search']);
-}
- 
+  searchResults: any;
+  constructor(public send: ExchangeserviceService, public route2: Router) { }
+  newSearch() {
+    this.route2.navigate(['/search']);
+  }
+
 
   ngOnInit() {
-      this.searchResults = this.send.GetSearchResult();
+    this.searchResults = this.send.GetSearchResult();
     console.log(this.searchResults);
 
   }

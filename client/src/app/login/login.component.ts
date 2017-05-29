@@ -22,16 +22,17 @@ export class LoginComponent implements OnInit {
   }
   check(form1) {
 
-    ;
+    
     console.log(form1.value.username);
     console.log(form1.value.password);
-    // this.auth.set(form1.value);
+   
     this.auth.Postlogin(form1.value).subscribe(res => {
       this.valid =res.respData.data;
       console.log(this.valid);
       console.log(this.valid[0].UserType_ID);
       this.valid2 = this.valid[0].UserType_ID;
-      
+      localStorage.setItem('role',this.valid2);
+     console.log(localStorage.getItem('role'));
         if (this.valid2 == "superadmin") {
           console.log("superadmin");
           this.router1.navigate(['/superadmin']);

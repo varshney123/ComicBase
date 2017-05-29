@@ -83,6 +83,10 @@ this.GetUserList();
         alert(errorr);
       });
   }
+  logout()
+  {
+     localStorage.removeItem("role");
+  }
   
   ngOnInit() {
     this.GetUserList();

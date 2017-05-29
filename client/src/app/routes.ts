@@ -17,6 +17,7 @@ import { SuperadminComponent } from "app/superadmin/superadmin.component";
 import { UserComponent } from "app/user/user.component";
 import { SeasonsComponent } from "app/seasons/seasons.component";
 import { ComicsComponent } from "app/comics/comics.component";
+import { AuthenticationService } from "app/authentication.service";
 
 export const AllRoutes = 
  [
@@ -26,7 +27,10 @@ export const AllRoutes =
 },
 {
   path:'admin',
-  component:AdminComponent
+  component:AdminComponent,
+  data:[{
+        role:'admin'
+    }],canActivate: [AuthenticationService]
 },
 {
   path:'',
@@ -38,11 +42,17 @@ export const AllRoutes =
 },
 {
   path:'superadmin',
-  component:SuperadminComponent},
+  component:SuperadminComponent,
+data:[{
+        role:'superadmin'
+    }],canActivate: [AuthenticationService]},
 
 {
   path:'user',
-  component:UserComponent},
+  component:UserComponent,
+data:[{
+        role:'user'
+    }],canActivate: [AuthenticationService]},
   {
     path:'search',
     component:SearchComponent
