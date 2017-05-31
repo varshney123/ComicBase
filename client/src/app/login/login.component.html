@@ -1,13 +1,15 @@
-<form #form1="ngForm" (ngSubmit)="check(form1)">
-  <div class="form-group">
-    <label>Username:</label>
-    <input type="text" name="username" [(ngModel)]="user" #username="ngModel" placeholder="Enter your Username">
-  </div>
-  <div class="form-group">
-    <label>Password:</label>
-    <input type="password" name="password" [(ngModel)]="pass" #password="ngModel" placeholder="Enter your Password">
-  </div>
-  <button type="submit" class="btn btn-primary">
-  <span></span>Login
-  </button>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center login-title">Sign in to Continue With Comics</h1>
+            <div class="account-wall">
+                <img class="profile-img" src="https://image.freepik.com/free-vector/comic-backgrounds_23-2147508673.jpg"
+                    alt="">
+                <form class="form-signin" #form1="ngForm" (ngSubmit)="check(form1)">
+                <input type="text" class="form-control" [(ngModel)]="user" name="username" #username="ngModel" placeholder="Username" required autofocus>
+                <input type="password" class="form-control" [(ngModel)]="pass" name="password" #password="ngModel" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Sign in</button>
+                </form>
+             </div>
+</div>

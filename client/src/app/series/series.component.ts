@@ -45,6 +45,7 @@ GetSeriesList() {
    // this.EditUsers(this.EditUser);
   }
   UpdateSeries(){
+     this.flag=!this.flag;
     console.log(this.EditSeries);
     this.Edit_Series(this.EditSeries);
   }
@@ -54,6 +55,7 @@ this.myservice.UpdateSeries(data).subscribe(res => {
       this.Series1 = res.respData.data;
       console.log(this.Series1);
       alert("updated succesfully");
+      this.GetSeriesList();
 
   });
 }
@@ -62,13 +64,14 @@ OpenEditor(){
 }
 AddSeries() {
   //  this.NewSeries.Series_ID = id;
-    this.flag=!this.flag;
-    this.myservice.PostSeries(this.EditSeries).subscribe(data => { console.log(data); }
+    this.flag2=!this.flag2;
+    this.myservice.PostSeries(this.EditSeries).subscribe(data => { console.log(data);
+     }
       , errorr => { console.log(errorr) }
     
     )
     console.log(this.EditSeries);
-    this.route2.navigate(['/season']);
+   
   }
 
   DeleteSeries(data)
@@ -77,14 +80,16 @@ AddSeries() {
      this.myservice.DeleteSeries(data).subscribe(res => {
       this.Series = res.respData.data;
       console.log(this.Series);
-     
+      this.GetSeriesList();
 
     }
       , errorr => {             // If there is an error it will alert an error.
         alert(errorr);
       });
   }
-  
+  proceed(){
+     this.route2.navigate(['/season']);
+  }
   ngOnInit() {
     this.GetSeriesList();
     this.flag=true;

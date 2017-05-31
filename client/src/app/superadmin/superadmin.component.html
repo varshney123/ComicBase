@@ -19,31 +19,40 @@
     </tbody>
   </table>
  <button class="btn btn-success" (click)="OpenEditor()">ADD NEW USER</button> 
+  <button class="btn btn-success" (click)="Logout()">LOGOUT</button> 
 </div>
 <div *ngIf="!flag">
 <div class="container">
   
      <form (ngSubmit)='Updateuser()' #DetailsForm='ngForm'>
        <label>Enter the new password:</label>
-    <input type="text" name="password" #password placeholder="Enter the new password" [(ngModel)]="EditUser.password">
-       <label>Enter Type Admin Or User:</label>
-    <input type="text" name="type" #type placeholder="Enter Type" [(ngModel)]="EditUser.UserType_ID">
-   
+    <input type="password" name="password" #password placeholder="Enter the new password" [(ngModel)]="EditUser.password">
+     
+    <div class="radio">
+  <label><input type="radio" name="admin" [(ngModel)]="EditUser.UserType_ID" value="admin">admin</label>
+</div>
+<div class="radio">
+  <label><input type="radio" name="user" [(ngModel)]="EditUser.UserType_ID" value="user">user</label>
+</div>
     <button class="btn btn-success">Update</button>
   </form>
 </div>
 </div>
+
+
 <div *ngIf="!flag2">
 <div class="container">
-  
-     <form (ngSubmit)='AddUser()' #DetailsForm='ngForm'>
+   <form (ngSubmit)='AddUser()' #DetailsForm='ngForm'>
+       <div class="radio">
+  <label><input type="radio" name="admin" [(ngModel)]="EditUser.UserType_ID" value="admin">admin</label>
+</div>
+<div class="radio">
+  <label><input type="radio" name="user" [(ngModel)]="EditUser.UserType_ID" value="user">user</label>
+</div>
        <label>Enter new Username:</label>
-    <input type="text" name="username" #password placeholder="Enter new username" [(ngModel)]="EditUser.username">
+    <input type="text" name="username" #username placeholder="Enter new username" [(ngModel)]="EditUser.username">
        <label>Enter  new password:</label>
-    <input type="text" name="password" #password placeholder="Enter new password" [(ngModel)]="EditUser.password">
-       <label>Enter Type Admin Or User:</label>
-    <input type="text" name="type" #type placeholder="Enter Type" [(ngModel)]="EditUser.UserType_ID">
-   
+    <input type="password" name="password" #password placeholder="Enter new password" [(ngModel)]="EditUser.password">
     <button class="btn btn-success">Submit</button>
   </form>
 </div>

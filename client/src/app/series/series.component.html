@@ -8,7 +8,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of Series; let i = index">
-        <td>{{item.Series_ID}}</td>
+        <td>{{item._id}}</td>
         <td>{{item.Series_Name}}</td>
          <td>{{item.Series_Data}}</td>
          <button class="btn btn-success" (click)="OpenEditTab(item._id)">EDIT</button><td></td>
@@ -17,6 +17,7 @@
     </tbody>
   </table>
  <button class="btn btn-success" (click)="OpenEditor()">ADD NEW SERIES</button> 
+ <button  class="btn btn-success" (click)="proceed()">PROCEED TO SEASONS</button>
 </div>
 <div *ngIf="!flag">
 <div class="container">
@@ -34,8 +35,10 @@
     <form (ngSubmit)='AddSeries()' #DetailsForm='ngForm'>
     <input type="text" name="Series" #Series placeholder="Enter new series name" [(ngModel)]="EditSeries.Series_Name">
     <input type="text" name="Data" #Data placeholder="Enter new Data" [(ngModel)]="EditSeries.Series_Data">
-    <button>PROCEED</button>
+    <button>SUBMIT</button>
   </form>
 </div>
 </div>
+
+
 

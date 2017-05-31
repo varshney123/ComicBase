@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataserviceService } from "app/dataservice.service";
 import { ExchangeserviceService } from "app/exchangeservice.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-user',
@@ -10,7 +11,7 @@ import { ExchangeserviceService } from "app/exchangeservice.service";
 export class UserComponent implements OnInit {
     Comics: any;
 comment='';
-  constructor(public myservice: DataserviceService,public exchngservice:ExchangeserviceService) { }
+  constructor(public myservice: DataserviceService,public exchngservice:ExchangeserviceService,public route:Router) { }
 
   ngOnInit() {
     this.GetComicsList();
@@ -30,7 +31,11 @@ comment='';
 console.log(data);
   }
 
-
+ Logout()
+  {
+     localStorage.removeItem("role");
+     this.route.navigate(['/login']);
+  }
     
   
 

@@ -1,6 +1,6 @@
-<p>
+<!--<p>
   seasons works!
-</p>
+</p>-->
 <div>
   <table class="table table-striped">
     <thead>
@@ -21,6 +21,7 @@
     </tbody>
   </table>
  <button class="btn btn-success" (click)="OpenEditor()">ADD NEW SEASON</button> 
+  <button class="btn btn-success" (click)="Proceed()">PROCEED TO COMICS</button>
 </div>
 <div *ngIf="!flag">
 <div class="container">
@@ -32,7 +33,8 @@
     <input type="text" name="Ends_On" #Data placeholder="Enter Ends_On Date" [(ngModel)]="NewSeason.Ends_On">-->
     <label>StartS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Starts_On"></ng2-datepicker>
     <label>EndS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Ends_On"></ng2-datepicker>
-    <button>UPDATE</button>
+    <button>UPDATE</button>.
+
   </form>
 </div>
 </div>
@@ -44,7 +46,7 @@
     <input type="text" name="Data" #Data placeholder="Enter Data" [(ngModel)]="NewSeason.Season_Data">
     <label>StartS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Starts_On"></ng2-datepicker>
     <label>EndS_On</label><ng2-datepicker [options]="options" [(ngModel)]="NewSeason.Ends_On"></ng2-datepicker>
-    <button>PROCEED</button>
+    <button>SUBMIT</button>
   </form>
 </div>
 </div>

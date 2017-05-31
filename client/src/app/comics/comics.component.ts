@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ExchangeserviceService } from "app/exchangeservice.service";
 import { DataserviceService } from "app/dataservice.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-comics',
@@ -30,9 +31,12 @@ export class ComicsComponent implements OnInit {
   Comic;
   Comic1;
   flag2: boolean;
-  constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService) { }
+  constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService,public route:Router) { }
   AddComics() {
-    this.myservice.PostComic(this.NewComic).subscribe(data => { console.log(data); }
+     this.flag2 = !this.flag2;
+    this.myservice.PostComic(this.NewComic).subscribe(data => { console.log(data);
+    alert("Added succesfully");
+    this.GetComicList(); }
       , errorr => { console.log(errorr) }
 
     )
@@ -59,13 +63,15 @@ export class ComicsComponent implements OnInit {
   UpdateComic() {
     console.log(this.NewComic);
     this.Edit_Comic(this.NewComic);
+    this.flag = !this.flag;
   }
   Edit_Comic(data) {
     console.log(data);
     this.myservice.UpdateComic(data).subscribe(res => {
       this.Comic1 = res.respData.data;
       console.log(this.Comic1);
-      alert("updated succesfully");
+      alert("Updated succesfully");
+    this.GetComicList();
 
     });
   }
@@ -79,6 +85,8 @@ export class ComicsComponent implements OnInit {
     this.myservice.DeleteComic(data).subscribe(res => {
       this.Comic = res.respData.data;
       console.log(this.Comic);
+       alert("Deleted succesfully");
+    this.GetComicList();
 
 
     }
@@ -100,6 +108,11 @@ export class ComicsComponent implements OnInit {
     })
     reader.readAsDataURL(file);
     //console.log(this.base64);
+  }
+  Logout()
+  {
+     localStorage.removeItem("role");
+     this.route.navigate(['/login']);
   }
   ngOnInit() {
     this.GetComicList();

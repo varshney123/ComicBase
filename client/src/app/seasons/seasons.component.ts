@@ -36,12 +36,16 @@ flag2:boolean;
    }
 AddSeason() {
   //  this.NewSeries.Series_ID = id;
-    this.myservice.PostSeason(this.NewSeason).subscribe(data => { console.log(data); }
+  console.log(this.NewSeason.Starts_On)
+    this.myservice.PostSeason(this.NewSeason).subscribe(data => { console.log(data);
+      alert("succesfully added");
+    this.GetSeasonList();
+   }
       , errorr => { console.log(errorr) }
 
     )
     console.log(this.NewSeason);
-    this.route3.navigate(['/comics']);
+   
   }
 GetSeasonList() {
     this.myservice.GetSeason().subscribe(res => {
@@ -57,11 +61,13 @@ GetSeasonList() {
   OpenEditTab(data){
     console.log(data);
     this.flag=!this.flag;
+    
     this.NewSeason._id=data;
    console.log(this.NewSeason);
    
   }
   UpdateSeason(){
+    this.flag=!this.flag;
     console.log(this.NewSeason);
     this.Edit_Season(this.NewSeason);
   }
@@ -72,10 +78,16 @@ this.myservice.UpdateSeason(data).subscribe(res => {
       console.log(this.Season1);
       alert("updated succesfully");
 
+    this.GetSeasonList();
+      
   });
 }
 OpenEditor(){
    this.flag2=!this.flag2;
+   
+}
+Proceed(){
+ this.route3.navigate(['/comics']);
 }
 
 
@@ -85,7 +97,8 @@ OpenEditor(){
      this.myservice.DeleteSeason(data).subscribe(res => {
       this.Season = res.respData.data;
       console.log(this.Season);
-     
+     alert("deleted succesfully");
+       this.GetSeasonList();
 
     }
       , errorr => {             // If there is an error it will alert an error.
