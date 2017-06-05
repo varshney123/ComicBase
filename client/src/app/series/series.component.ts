@@ -9,6 +9,8 @@ import { Router } from "@angular/router";
   styleUrls: ['./series.component.css']
 })
 export class SeriesComponent implements OnInit {
+    id: any;
+    results: any;
     flag: boolean;
 Series;
  Series1;
@@ -25,7 +27,7 @@ EditSeries:{
     Series_Data: ''        
 };
 
-  constructor(public myservice:DataserviceService,public exchngservice:ExchangeserviceService,public route2:Router) { }
+  constructor(public router:Router,public myservice:DataserviceService,public exchngservice:ExchangeserviceService,public route2:Router) { }
 GetSeriesList() {
     this.myservice.GetSeries().subscribe(res => {
       this.Series = res.respData.data;
@@ -66,6 +68,8 @@ AddSeries() {
   //  this.NewSeries.Series_ID = id;
     this.flag2=!this.flag2;
     this.myservice.PostSeries(this.EditSeries).subscribe(data => { console.log(data);
+      this.GetSeriesList();
+     
      }
       , errorr => { console.log(errorr) }
     
@@ -80,6 +84,7 @@ AddSeries() {
      this.myservice.DeleteSeries(data).subscribe(res => {
       this.Series = res.respData.data;
       console.log(this.Series);
+      alert("Deleted");
       this.GetSeriesList();
 
     }
@@ -87,9 +92,30 @@ AddSeries() {
         alert(errorr);
       });
   }
-  proceed(){
-     this.route2.navigate(['/season']);
+  // proceed(){
+     
+  //    this.route2.navigate(['/season']);
+  // }
+  Seriesid(data){
+
+console.log(data);
+this.id=data;
+this.getseasons();
   }
+  getseasons(){
+this.myservice.GetSeasonSearch(this.id).subscribe(res => {
+      console.log(res.respData.data);
+      console.log(res);
+      this.results=res.respData.data;
+      console.log(this.results);
+      this.exchngservice.SendSeasonResult(this.results);
+      // console.log(this.results);
+      this.router.navigate(['/season']);
+    } , errorr => {             // If there is an error it will alert an error.
+        alert(errorr);
+      });
+ }
+
   ngOnInit() {
     this.GetSeriesList();
     this.flag=true;

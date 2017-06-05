@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ExchangeserviceService {
+    Comic: any;
+    Seasons: any;
     Users: any;
     Search: any;
     Series: any;
@@ -63,6 +65,29 @@ SendSearchResult(Obj) {
   GetSearchResult() {
     console.log(this.Search);
     return this.Search;
+  }
+  SendSeasonResult(Obj) {
+    console.log(Obj);
+    this.Seasons = Obj;
+    console.log(this.Seasons);
+  }
+
+
+  GetSeasonResult() {
+    console.log(this.Seasons);
+    return this.Seasons;
+  }
+  
+  SendComicResult(Obj) {
+    console.log(Obj);
+    this.Comic = Obj;
+    console.log(this.Comic);
+  }
+
+
+  GetComicResult() {
+    console.log(this.Comic);
+    return this.Comic;
   }
   SendUsers(Obj){
     console.log(Obj);

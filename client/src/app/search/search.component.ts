@@ -14,7 +14,9 @@ export class SearchComponent implements OnInit {
   constructor(public search: DataserviceService, public router: Router, public searchdata: ExchangeserviceService) { }
   SearchDb() {
     this.search.GetSearch(this.SearchItem).subscribe(res => {
-      this.GetSearch = res.respData.data;
+      console.log(res.status);
+    
+      this.GetSearch = res;
       console.log(this.GetSearch);
       this.searchdata.SendSearchResult(this.GetSearch);
       console.log(this.GetSearch);

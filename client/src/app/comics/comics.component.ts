@@ -9,13 +9,17 @@ import { Router } from "@angular/router";
   styleUrls: ['./comics.component.css']
 })
 export class ComicsComponent implements OnInit {
+    Series: any;
+    Seasons: any;
+    Season: any; 
   base64: any;
   NewComic: {
     Comic_Name: String,
     Comic_Image: String,
     Comic_Data: String,
     Comic_Comments: String,
-    Season_ID: Number,
+    Season_ID: String,
+    Series_ID: String,
     _id: String
 
   } = {
@@ -23,7 +27,8 @@ export class ComicsComponent implements OnInit {
     Comic_Image: '',
     Comic_Data: '',
     Comic_Comments: '',
-    Season_ID: 0,
+    Season_ID: '',
+    Series_ID: '',
     _id: ''
 
   };
@@ -32,7 +37,9 @@ export class ComicsComponent implements OnInit {
   Comic1;
   flag2: boolean;
   constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService,public route:Router) { }
-  AddComics() {
+  AddComics(series,season) {
+     this.NewComic.Series_ID=series;
+     this.NewComic.Season_ID=season;
      this.flag2 = !this.flag2;
     this.myservice.PostComic(this.NewComic).subscribe(data => { console.log(data);
     alert("Added succesfully");
@@ -43,15 +50,17 @@ export class ComicsComponent implements OnInit {
     console.log(this.NewComic);
   }
   GetComicList() {
-    this.myservice.GetComics().subscribe(res => {
-      this.Comic = res.respData.data;
-      console.log(this.Comic);
-      this.exchngservice.SendComics(this.Comic);
+     this.Comic=this.exchngservice.GetComicResult();
+    
+    // this.myservice.GetComics().subscribe(res => {
+    //   this.Comic = res.respData.data;
+    //   console.log(this.Comic);
+    //   this.exchngservice.SendComics(this.Comic);
 
-    }
-      , errorr => {             // If there is an error it will alert an error.
-        alert(errorr);
-      });
+    // }
+    //   , errorr => {             // If there is an error it will alert an error.
+    //     alert(errorr);
+    //   });
   }
   OpenEditTab(data) {
     console.log(data);
@@ -114,8 +123,33 @@ export class ComicsComponent implements OnInit {
      localStorage.removeItem("role");
      this.route.navigate(['/login']);
   }
+  GetAllSeasons(){
+   this.myservice.GetSeason().subscribe(res => {
+      this.Seasons= res.respData.data;
+      console.log(this.Seasons);
+      this.exchngservice.SendSeason(this.Seasons);
+
+    }
+      , errorr => {             // If there is an error it will alert an error.
+        alert(errorr);
+      });
+
+ }  
+  GetSeriesList() {
+    this.myservice.GetSeries().subscribe(res => {
+      this.Series= res.respData.data;
+      console.log(this.Series);
+      
+
+    }
+      , errorr => {             // If there is an error it will alert an error.
+        alert(errorr);
+      });
+  }
   ngOnInit() {
-    this.GetComicList();
+    this.GetAllSeasons();
+    this.GetSeriesList();
+   this.GetComicList();
     this.flag = true;
     this.flag2 = true;
   }

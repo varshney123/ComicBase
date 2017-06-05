@@ -7,11 +7,13 @@
         <h1>{{item.Comic_Name}}</h1>
         <hr> {{item.Comic_Data}}
         <hr>
-
+        
       </div>
     </div>
   </div>
 
-  <button class="btn btn-success" (click)='newSearch()'>New Search</button>
+ <div *ngIf="!flag">
+   <p>NO RESULTS FOUND</p>
+ </div>
 
 </div>

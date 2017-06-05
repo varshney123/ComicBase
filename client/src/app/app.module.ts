@@ -21,6 +21,7 @@ import { SeriesComponent } from './series/series.component';
 import { SeasonsComponent } from './seasons/seasons.component';
 import { ComicsComponent } from './comics/comics.component';
 import { DatePickerModule } from 'ng2-datepicker';
+import { NewtwstComponent } from './newtwst/newtwst.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DatePickerModule } from 'ng2-datepicker';
     UserComponent,
     SeriesComponent,
     SeasonsComponent,
-    ComicsComponent
+    ComicsComponent,
+    NewtwstComponent
   ],
   imports: [
     BrowserModule,

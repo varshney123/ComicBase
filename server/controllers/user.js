@@ -3,6 +3,60 @@ var User = require("../models/users");
 var Series = require("../models/series");
 var Season = require("../models/seasons");
 var Comic = require("../models/comics");
+ var FileSystem =require('fs');
+ var Comment=require("../models/comments")
+
+
+exports.postcomments = function (req, res) {
+    var comment = new Comment({
+        Comic_ID: req.body.Comic_ID,
+        Comment: req.body.Comment,
+        created_at: new Date(),
+        updated_at: ""
+    });
+
+    comment.save(function (err, response) {
+        if (err) {
+            return res.json(req, res, err);
+        }
+
+        res.json({
+            "status": true,
+            "respData": {
+                "data": response
+            }
+        }
+        )
+
+    });
+};
+
+exports.searchcomment = function (req, res) {
+    console.log(req.params._id);
+    var Comic_ID = req.params._id;
+
+    Comment.find({
+        Comic_ID: Comic_ID
+    }, function (err, response) {
+        if (err) {
+            return res.json(req, res, err);
+        }
+        if ((response || []).length === 0) {
+            return res.json({
+                "status": false,
+                "respData": {
+                    "data": "no results found"
+                }
+            });
+        }
+        return res.json({
+            "status": true,
+            "respData": {
+                "data": response
+            }
+        });
+    })
+};
 
 exports.postusers = function (req, res) {
     var user = new User({
@@ -131,6 +185,7 @@ exports.postcomics = function (req, res) {
     var comic = new Comic({
         Season_ID: req.body.Season_ID,
         Comic_ID: req.body.Comic_ID,
+        Series_ID:req.body.Series_ID,
         Comic_Name: req.body.Comic_Name,
         Comic_Image: req.body.Comic_Image,
         Comic_Data: req.body.Comic_Data,
@@ -139,15 +194,65 @@ exports.postcomics = function (req, res) {
         updated_at: ""
     });
 
-    comic.save(function (err, response) {
+
+    // comic.save(function (err, aakash) {
+    //     if (err) {
+    //         return res.json(req, res, err);
+    //     }
+
+let image = comic.Comic_Image;
+let imageGroup=comic.Comic_Name;
+let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
+
+// An empty object
+let response = {}
+
+if (matches.length !== 3) {
+ return new Error('Invalid input string')
+}
+// Image type (i.e. image/jpeg)
+response.type = matches[1]
+ console.log(matches[1]+'match 1');
+// Image base64 data
+response.data = new Buffer(matches[2], 'base64')
+ //console.log(matches[2]+'match 2');
+ 
+
+var data = imageNameData(image);
+
+function imageNameData(data) {
+    console.log("inside function")
+        var imageName =  imageGroup+  '_' + Math.random();
+        if (data.indexOf('image/jpeg') > -1) {
+            return imageName + '.jpeg';
+        }
+        if (data.indexOf('image/png') > -1) {
+            return imageName + '.png';
+        }
+        if (data.indexOf('image/gif') > -1) {
+            return imageName + '.gif';
+        }
+}
+
+
+ var imageName = '/home/user/Desktop/localcomicbase/series_node' + '/' + data;
+//console.log(imageName);
+FileSystem.writeFile(imageName, response.data, function (error) {
+   // console.log(response.data);
+ if (error) throw error
+})
+   comic.Comic_Image=data;
+   //console.log(comic.Comic_Image);
+   comic.save(function (err, aakash) {
         if (err) {
             return res.json(req, res, err);
         }
 
+
         res.json({
             "status": true,
             "respData": {
-                "data": response
+                "data": aakash
             }
         })
 
@@ -159,7 +264,9 @@ exports.getcomics = function (req, res) {
         if (err) {
             return res.json(req, res, err);
         }
+      
 
+     //   console.log(response[loop].Comic_Image);
         res.json({
             "status": true,
             "respData": {
@@ -167,6 +274,7 @@ exports.getcomics = function (req, res) {
             }
         });
     })
+    
 }
 exports.searchdata = function (req, res) {
     console.log(req.params.reg);
@@ -465,6 +573,66 @@ exports.deleteComics = function (req, res) {
 
     })
 }
+exports.searchSeason = function (req, res) {
+    console.log(req.params._id);
+    var id = req.params._id;
+
+    Season.find({
+        Series_ID: id
+    }, function (err, response) {
+       // console.log(response);
+        if (err) {
+            return res.json(err);
+        }
+        if ((response || []).length === 0) {
+            return res.json({
+                "status": false,
+                "respData": {
+                    "data": "no results found"
+                }
+            });
+        }
+        return res.json({
+            "status": true,
+            "respData": {
+                "data": response
+            }
+        });
+    })
+};
+exports.searchComic = function (req, res) {
+    console.log(req.params._id);
+    var id = req.params._id;
+
+    Comic.find({
+        Season_ID: id
+    }, function (err, response) {
+       // console.log(response);
+        if (err) {
+            return res.json(err);
+        }
+        for(var loop=0;loop<response.length;loop++)
+{
+ response[loop].Comic_Image='http://localhost:4000/'+ response[loop].Comic_Image;
+ console.log(response[loop].Comic_Image);
+
+        }
+        if ((response || []).length === 0) {
+            return res.json({
+                "status": false,
+                "respData": {
+                    "data": "no results found"
+                }
+            });
+        }
+        return res.json({
+            "status": true,
+            "respData": {
+                "data": response
+            }
+        });
+    })
+};
 
 
 

@@ -8,6 +8,9 @@ router.route('/v1/users')
   .get(userController.getusers)
   .put(userController.updateUsers)
 
+router.route('/v1/comments')
+  .post(userController.postcomments)
+
 router.route('/v1/series')
   .post(userController.postseries)
   .get(userController.getseries)
@@ -25,11 +28,20 @@ router.route('/v1/comics')
   .put(userController.updateComics)
 
 
-router.route('/v1/Check')
+router.route('/v1/Verify')
   .post(userController.checkusers);
 
 router.route('/v1/Search/:reg')
   .get(userController.searchdata);
+
+router.route('/v1/SearchSeason/:_id')
+  .get(userController.searchSeason);
+  
+router.route('/v1/SearchComic/:_id')
+  .get(userController.searchComic); 
+
+router.route('/v1/SearchComment/:_id')
+  .get(userController.searchcomment);  
 
 router.route('/v1/users/:username')
   .delete(userController.deleteUsers)

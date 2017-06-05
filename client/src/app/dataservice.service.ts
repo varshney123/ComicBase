@@ -24,12 +24,31 @@ export class DataserviceService {
       data => data.json()
     );
   }
+  GetSeasonSearch(param): Observable<any> {
+    console.log(param);
+    return this.httpService.get(this.UrlObject.UrlObj.SeasonSearchUrl + param).map(
+      data => data.json()
+    );
+  }
+  GetComicSearch(param): Observable<any> {
+    console.log(param);
+    return this.httpService.get(this.UrlObject.UrlObj.ComicSearchUrl + param).map(
+      data => data.json()
+    );
+  }
+  GetCommentSearch(param): Observable<any> {
+    console.log(param);
+    return this.httpService.get(this.UrlObject.UrlObj.SearchCommentsUrl + param).map(
+      data => data.json()
+    );
+  }
   GetSearch(SearchParam): Observable<any> {
     console.log(SearchParam);
     return this.httpService.get(this.UrlObject.UrlObj.SearchUrl + SearchParam).map(
       data => data.json()
     );
   }
+
   GetUsers(): Observable<any> {
     return this.httpService.get(this.UrlObject.UrlObj.UsersUrl).map(
       data => data.json()
@@ -62,6 +81,13 @@ export class DataserviceService {
     let options = new RequestOptions({ headers: headers });
     console.log(Data);
    return this.httpService.post(this.UrlObject.UrlObj.ComicUrl, Data, headers).map(
+     (res: Response) => res.json());
+  }
+  PostComments(Data){
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    console.log(Data);
+   return this.httpService.post(this.UrlObject.UrlObj.CommentsUrl, Data, headers).map(
      (res: Response) => res.json());
   }
   UpdateUsers(Data){

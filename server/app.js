@@ -16,7 +16,7 @@ app.set('env', process.env.NODE_ENV || 'production');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json({limit:'50mb'}));
-
+app.use(express.static(__dirname));
 routes = require('./routes/index')
 app.use('/api', routes);
 
