@@ -1,21 +1,45 @@
 <!--<p>
   mainbody works!
 </p>-->
-<div [style.color]="'grey'">
-  <div class="row">
-    <div class="col-sm-12">
-      <h3 align="center">COMICS</h3>
-      <div class="well well-lg">
-        <div>
-          <ul *ngFor="let item of Comics; let i = index">
-            <!--<a routerLink='/movies' routerLinkActive="active">-->
-               <li>{{item.Comic_Name}}</li>
-               <img src={{item.Comic_Image}} height="20%" width="30%">
-              <!--<li (click)="DisplayMovies(i)">{{item.H_Name}}</li>-->
-            <!--</a>-->
-          </ul>
-        </div>
+
+  <!--<div class="row">
+    <div class="col-md-2">
       </div>
+      <h3 align="center">COMICS</h3>
+      
+       
+          <ul *ngFor="let item of Comics; let i = index">
+            <div class="col-md-4">-->
+          
+               <!--<li>{{item.Comic_Name}}</li>
+               <img src={{item.Comic_Image}} height="20%" width="30%">-->
+              
+              <!--</div>
+          </ul>
+       <div class="col-md-2">
+      </div>
+  </div>-->
+  
+  
+    <body>
+  <div class="row">
+  <div class="col-md-2">
+  </div>
+  <div class="col-md-8">
+    <div *ngFor="let item of Comics; let i = index">
+       
+      <div class="thumbnail" style="background-color:black;border-radius:25px ">
+        <img src={{item.Comic_Image}} alt="Lights" height="225" width="300" class="img-circle">
+        <div class="caption" style="color:white">
+          {{item.Comic_Name}}
+          <br />
+          
       </div>
     </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+    </div>
 </div>
+    </body>
+    

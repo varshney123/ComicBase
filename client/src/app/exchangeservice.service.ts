@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
-
+import { CoolHttp } from 'angular2-cool-http';
 @Injectable()
 export class ExchangeserviceService {
   Comic: any;

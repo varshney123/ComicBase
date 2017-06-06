@@ -21,7 +21,7 @@ import { SeriesComponent } from './series/series.component';
 import { SeasonsComponent } from './seasons/seasons.component';
 import { ComicsComponent } from './comics/comics.component';
 import { DatePickerModule } from 'ng2-datepicker';
-
+import { CoolLoadingIndicatorModule } from 'angular2-cool-loading-indicator';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { DatePickerModule } from 'ng2-datepicker';
     FormsModule,
     HttpModule,
      DatePickerModule,
-    RouterModule.forRoot(AllRoutes)
+    RouterModule.forRoot(AllRoutes),
+    CoolLoadingIndicatorModule
   ],
   providers: [DataserviceService,ExchangeserviceService,Configuration,AuthenticationService],
   bootstrap: [AppComponent]

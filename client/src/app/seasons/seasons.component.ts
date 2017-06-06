@@ -68,7 +68,10 @@ export class SeasonsComponent implements OnInit {
 
   }
   GetSeasonList() {
-    this.Season = this.exchngservice.GetSeasonResult()
+    this.Season=this.exchngservice.GetSeasonResult();
+      
+     
+    
     //  this.Season = res.respData.data;
     console.log(this.Season);
     // this.exchngservice.SendSeason(this.Season);
@@ -169,9 +172,10 @@ export class SeasonsComponent implements OnInit {
       , errorr => {             // If there is an error it will alert an error.
         alert(errorr);
       });
+   
   }
   ngOnInit() {
-    //  this.GetSeasonList();
+    //this.GetSeasonList();
     this.GetSeriesList();
     // this.GetAllSeasons();
     this.flag = true;

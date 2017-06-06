@@ -25,9 +25,10 @@
 <div class="container">
   
      <form (ngSubmit)='Updateuser()' #DetailsForm='ngForm'>
+       <div class="form-group">
        <label>Enter the new password:</label>
     <input type="password" name="password" #password placeholder="Enter the new password" [(ngModel)]="EditUser.password">
-     
+       </div>
     <div class="radio">
   <label><input type="radio" name="admin" [(ngModel)]="EditUser.UserType_ID" value="admin">admin</label>
 </div>
@@ -44,15 +45,20 @@
 <div class="container">
    <form (ngSubmit)='AddUser()' #DetailsForm='ngForm'>
        <div class="radio">
+
   <label><input type="radio" name="admin" [(ngModel)]="EditUser.UserType_ID" value="admin">admin</label>
 </div>
 <div class="radio">
   <label><input type="radio" name="user" [(ngModel)]="EditUser.UserType_ID" value="user">user</label>
 </div>
-       <label>Enter new Username:</label>
+      <div class="form-group"> <label>Enter new Username:</label>
     <input type="text" name="username" #username placeholder="Enter new username" [(ngModel)]="EditUser.username">
+      </div>
+      <div class="form-group">
        <label>Enter  new password:</label>
+   
     <input type="password" name="password" #password placeholder="Enter new password" [(ngModel)]="EditUser.password">
+      </div>
     <button class="btn btn-success">Submit</button>
   </form>
 </div>

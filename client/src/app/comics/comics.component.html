@@ -28,13 +28,17 @@
 <div class="container">
   
     <form (ngSubmit)='UpdateComic()' #DetailsForm='ngForm'>
+       <div class="form-group">
     <input type="text" name="Season" #Series placeholder="Enter new comic name" [(ngModel)]="NewComic.Comic_Name">
+       </div>
     <!--<input type="text" name="Data" #Data placeholder="Upload Image" [(ngModel)]="NewComic.Comic_Image">-->
+   <div class="form-group">
     <label for="single">Destination</label>
      <input type="file"  name="single" accept="image/*" (change)="changeListener($event)">                                  
-    
+   </div>
+   <div class="form-group">
     <input type="text" name="Data" #Starts placeholder="Enter Data" [(ngModel)]="NewComic.Comic_Data">
-   
+   </div>
     <button>UPDATE</button>
   </form>
 </div>
@@ -43,8 +47,10 @@
 <div class="container">
   
     <form (ngSubmit)='AddComics(dropdown.value,dropdown2.value)' #DetailsForm='ngForm'>
+   <div class="form-group">
     <input type="text" name="Comic" #Comic placeholder="Enter the Comic name" [(ngModel)]="NewComic.Comic_Name">
-     <select #dropdown>
+     </div>
+       <select #dropdown>
   <option  *ngFor="let item of Series" name="Series_Name" value={{item._id}}>{{item.Series_Name}}</option>
 </select>  
  <select #dropdown2>
