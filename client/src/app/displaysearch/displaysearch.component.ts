@@ -7,30 +7,28 @@ import { Router } from "@angular/router";
   styleUrls: ['./displaysearch.component.css']
 })
 export class DisplaysearchComponent implements OnInit {
-    search: any;
+  search: any;
   searchResults: any;
-  flag:boolean;
+  flag: boolean;
   constructor(public send: ExchangeserviceService, public route2: Router) { }
-  // newSearch() {
-  //   this.route2.navigate(['/search']);
-  // }
+
 
 
   ngOnInit() {
-    this.flag=true;
+    this.flag = true;
     this.search = this.send.GetSearchResult();
     console.log(this.search.status);
-    if((this.search.status)==true){
-      this.searchResults=this.search.respData.data;
+    if ((this.search.status) == true) {
+      this.searchResults = this.search.respData.data;
     }
-    else{
-this.flag=!this.flag;
+    else {
+      this.flag = !this.flag;
 
     }
- console.log(this.searchResults);
-    }
-   
-
+    console.log(this.searchResults);
   }
+
+
+}
 
 

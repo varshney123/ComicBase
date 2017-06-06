@@ -9,13 +9,21 @@
       <li class="active"><a routerLink='/' routerLinkActive="active">Home</a></li>
       <li><a href="#">Comics</a></li>
       <li><a routerLink='/search' routerLinkActive="active">Search</a></li>
+       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
+       
+        <li *ngIf="!auth.isLoggedin()">
           <a routerLink='/login' routerLinkActive="active">
             <span class="glyphicon glyphicon-log-in"></span> Login</a>
         </li>
+        
+        <div *ngIf="auth.isLoggedin()">
+          <a routerLink='/' routerLinkActive="active">
+         <button class="btn btn-info navbar-btn" (click)="logout()">LOGOUT</button>
+         </a>
+         </div>
       </ul>
-    </ul>
+   
   </div>
 </nav>
 

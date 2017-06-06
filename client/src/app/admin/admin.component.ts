@@ -9,12 +9,7 @@ import { DataserviceService } from "app/dataservice.service";
 })
 export class AdminComponent implements OnInit {
     
-
-
-
   constructor(public myservice: DataserviceService,public exchngservice:ExchangeserviceService) { }
-
-
 
   ngOnInit() {
     

@@ -9,24 +9,24 @@ import { Router } from "@angular/router";
   styleUrls: ['./superadmin.component.css']
 })
 export class SuperadminComponent implements OnInit {
-  
-    Users1: any;
-    Users: any;
-    flag:boolean;
-     flag2:boolean;
-EditUser:{
-    username:String,
+
+  Users1: any;
+  Users: any;
+  flag: boolean;
+  flag2: boolean;
+  EditUser: {
+    username: String,
     password: String,
     UserType_ID: String
   } = {
-    username:'',
+    username: '',
     password: '',
-    UserType_ID: ''        
-};
-  constructor(public myservice:DataserviceService,public exchngservice:ExchangeserviceService,public route:Router) { }
+    UserType_ID: ''
+  };
+  constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route: Router) { }
 
-  
-GetUserList() {
+
+  GetUserList() {
     this.myservice.GetUsers().subscribe(res => {
       this.Users = res.respData.data;
       console.log(this.Users);
@@ -37,73 +37,71 @@ GetUserList() {
         alert(errorr);
       });
   }
-  
-  OpenEditTab(data){
+
+  OpenEditTab(data) {
     console.log(data);
-    this.flag=!this.flag;
-    this.EditUser.username=data;
-   console.log(this.EditUser);
-  
+    this.flag = !this.flag;
+    this.EditUser.username = data;
+    console.log(this.EditUser);
+
   }
-  Updateuser(){
+  Updateuser() {
 
     console.log(this.EditUser);
-    this.flag=!this.flag;
+    this.flag = !this.flag;
     this.EditUsers(this.EditUser);
-   
-    
+
+
   }
-  EditUsers(data){
-console.log(data);
-this.myservice.UpdateUsers(data).subscribe(res => {
+  EditUsers(data) {
+    console.log(data);
+    this.myservice.UpdateUsers(data).subscribe(res => {
       this.Users1 = res.respData.data;
       console.log(this.Users1);
       alert("updated succesfully");
-      this.flag=!this.flag;
- this.GetUserList();
-  });
-}
-OpenEditor(){
-   this.flag2=!this.flag2;
-}
-AddUser() {
-  
-    
-    this.myservice.PostUsers(this.EditUser).subscribe(data => { console.log(data);this.GetUserList(); }
-      , errorr => { console.log(errorr) }
-    
-    )
-   
+      this.flag = !this.flag;
+      this.GetUserList();
+    });
+  }
+  OpenEditor() {
+    this.flag2 = !this.flag2;
+  }
+  AddUser() {
 
-alert("added succesfully");
-     this.flag2=!this.flag2;
+
+    this.myservice.PostUsers(this.EditUser).subscribe(data => { console.log(data); this.GetUserList(); }
+      , errorr => { console.log(errorr) }
+
+    )
+
+
+    alert("added succesfully");
+    this.flag2 = !this.flag2;
 
   }
 
-  DeleteUsers(data)
-  { 
+  DeleteUsers(data) {
     console.log(data);
-     this.myservice.DeleteUsers(data).subscribe(res => {
+    this.myservice.DeleteUsers(data).subscribe(res => {
       this.Users = res.respData.data;
-      
-  alert("deleted succesfully");
- this.GetUserList();
-     
+
+      alert("deleted succesfully");
+      this.GetUserList();
+
 
     }
       , errorr => {             // If there is an error it will alert an error.
         alert(errorr);
       });
   }
-  Logout()
-  {
-     localStorage.removeItem("role");
-     this.route.navigate(['/login']);
+  Logout() {
+    localStorage.removeItem("role");
+    this.route.navigate(['/login']);
   }
-  
+
   ngOnInit() {
     this.GetUserList();
-    this.flag=true;
-    this.flag2=true;
+    this.flag = true;
+    this.flag2 = true;
   }
 }

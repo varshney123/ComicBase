@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs/Observable";
 
 @Injectable()
 export class ExchangeserviceService {
-    Comic: any;
-    Seasons: any;
-    Users: any;
-    Search: any;
-    Series: any;
-    Season: any;
-Comics;
-DataObj;
-SendComics(Obj) {
+  Comic: any;
+  Seasons: any;
+  Users: any;
+  Search: any;
+  Series: any;
+  Season: any;
+  Comics;
+  DataObj;
+  SendComics(Obj) {
     console.log(Obj);
     this.Comics = Obj;
     console.log(this.Comics);
@@ -55,7 +56,7 @@ SendComics(Obj) {
     return this.Series;
   }
 
-SendSearchResult(Obj) {
+  SendSearchResult(Obj) {
     console.log(Obj);
     this.Search = Obj;
     console.log(this.Search);
@@ -74,10 +75,10 @@ SendSearchResult(Obj) {
 
 
   GetSeasonResult() {
-    console.log(this.Seasons);
+    // console.log(this.Seasons);
     return this.Seasons;
   }
-  
+
   SendComicResult(Obj) {
     console.log(Obj);
     this.Comic = Obj;
@@ -89,7 +90,7 @@ SendSearchResult(Obj) {
     console.log(this.Comic);
     return this.Comic;
   }
-  SendUsers(Obj){
+  SendUsers(Obj) {
     console.log(Obj);
     this.Users = Obj;
     console.log(this.Users);

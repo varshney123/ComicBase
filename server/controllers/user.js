@@ -3,10 +3,11 @@ var User = require("../models/users");
 var Series = require("../models/series");
 var Season = require("../models/seasons");
 var Comic = require("../models/comics");
- var FileSystem =require('fs');
- var Comment=require("../models/comments")
+var FileSystem = require('fs');
+var Comment = require("../models/comments");
+var bcrypt = require('bcrypt');
 
-
+var jwt = require('jsonwebtoken');
 exports.postcomments = function (req, res) {
     var comment = new Comment({
         Comic_ID: req.body.Comic_ID,
@@ -66,7 +67,12 @@ exports.postusers = function (req, res) {
         created_at: new Date(),
         updated_at: ""
     });
-
+    console.log(user.password);
+    var salt = bcrypt.genSaltSync(10);
+    console.log(salt);
+    var hash = bcrypt.hashSync(user.password, salt);
+    console.log(hash);
+    user.password = hash;
     user.save(function (err, response) {
         if (err) {
             return res.json(req, res, err);
@@ -185,7 +191,7 @@ exports.postcomics = function (req, res) {
     var comic = new Comic({
         Season_ID: req.body.Season_ID,
         Comic_ID: req.body.Comic_ID,
-        Series_ID:req.body.Series_ID,
+        Series_ID: req.body.Series_ID,
         Comic_Name: req.body.Comic_Name,
         Comic_Image: req.body.Comic_Image,
         Comic_Data: req.body.Comic_Data,
@@ -194,35 +200,29 @@ exports.postcomics = function (req, res) {
         updated_at: ""
     });
 
+    let image = comic.Comic_Image;
+    let imageGroup = comic.Comic_Name;
+    let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
 
-    // comic.save(function (err, aakash) {
-    //     if (err) {
-    //         return res.json(req, res, err);
-    //     }
+    // An empty object
+    let response = {}
 
-let image = comic.Comic_Image;
-let imageGroup=comic.Comic_Name;
-let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
+    if (matches.length !== 3) {
+        return new Error('Invalid input string')
+    }
+    // Image type (i.e. image/jpeg)
+    response.type = matches[1]
+    console.log(matches[1] + 'match 1');
+    // Image base64 data
+    response.data = new Buffer(matches[2], 'base64')
+    //console.log(matches[2]+'match 2');
 
-// An empty object
-let response = {}
 
-if (matches.length !== 3) {
- return new Error('Invalid input string')
-}
-// Image type (i.e. image/jpeg)
-response.type = matches[1]
- console.log(matches[1]+'match 1');
-// Image base64 data
-response.data = new Buffer(matches[2], 'base64')
- //console.log(matches[2]+'match 2');
- 
+    var data = imageNameData(image);
 
-var data = imageNameData(image);
-
-function imageNameData(data) {
-    console.log("inside function")
-        var imageName =  imageGroup+  '_' + Math.random();
+    function imageNameData(data) {
+        console.log("inside function")
+        var imageName = imageGroup + '_' + Math.random();
         if (data.indexOf('image/jpeg') > -1) {
             return imageName + '.jpeg';
         }
@@ -232,18 +232,18 @@ function imageNameData(data) {
         if (data.indexOf('image/gif') > -1) {
             return imageName + '.gif';
         }
-}
+    }
 
 
- var imageName = '/home/user/Desktop/localcomicbase/series_node' + '/' + data;
-//console.log(imageName);
-FileSystem.writeFile(imageName, response.data, function (error) {
-   // console.log(response.data);
- if (error) throw error
-})
-   comic.Comic_Image=data;
-   //console.log(comic.Comic_Image);
-   comic.save(function (err, aakash) {
+    var imageName = '/home/user/Desktop/localcomicbase/series_node' + '/' + data;
+    //console.log(imageName);
+    FileSystem.writeFile(imageName, response.data, function (error) {
+        // console.log(response.data);
+        if (error) throw error
+    })
+    comic.Comic_Image = data;
+    //console.log(comic.Comic_Image);
+    comic.save(function (err, aakash) {
         if (err) {
             return res.json(req, res, err);
         }
@@ -264,9 +264,14 @@ exports.getcomics = function (req, res) {
         if (err) {
             return res.json(req, res, err);
         }
-      
+        for (var loop = 0; loop < response.length; loop++) {
+            response[loop].Comic_Image = 'http://localhost:4000/' + response[loop].Comic_Image;
+            console.log(response[loop].Comic_Image);
 
-     //   console.log(response[loop].Comic_Image);
+        }
+
+
+        //   console.log(response[loop].Comic_Image);
         res.json({
             "status": true,
             "respData": {
@@ -274,7 +279,7 @@ exports.getcomics = function (req, res) {
             }
         });
     })
-    
+
 }
 exports.searchdata = function (req, res) {
     console.log(req.params.reg);
@@ -303,24 +308,38 @@ exports.searchdata = function (req, res) {
     })
 };
 exports.checkusers = function (req, res) {
-
+    console.log("inside function 2");
     username1 = req.body.username;
     password1 = req.body.password;
+
     console.log(username1);
     User.find({
-        username: username1,
-        password: password1
+        username: username1
+        //  password: password1
     }, function (err, response) {
-        if (err) {
-            res.json(err);
-        }
-        if (response) {
-            res.json({
-                "status": true,
-                "respData": {
-                    "data": response
-                }
-            });
+        console.log(response);
+        console.log(password1);
+        console.log(response[0].password);
+        var result = bcrypt.compareSync(password1, response[0].password);
+        if (result == true) {
+
+
+            if (err) {
+                res.json(err);
+            }
+            if (response) {
+                console.log("inside function");
+                console.log(req.body.username);
+                var mytoken = jwt.sign({ username: req.body.username }, 'check');
+                // var UserType_ID=response.
+                res.json({
+                    "status": true,
+                    "respData": {
+                        "response": response,
+                        "mytoken": mytoken
+                    }
+                });
+            }
         }
         else {
             res.json({
@@ -340,7 +359,12 @@ exports.updateUsers = function (req, res) {
         }
         var UserType_ID = req.body.UserType_ID
         var password = req.body.password;
-        user.password = password;
+        var salt = bcrypt.genSaltSync(10);
+        console.log(salt);
+        var hash = bcrypt.hashSync(password, salt);
+        console.log(hash);
+        user.password = hash;
+
         user.UserType_ID = UserType_ID;
         user.updated_at = new Date();
 
@@ -580,7 +604,7 @@ exports.searchSeason = function (req, res) {
     Season.find({
         Series_ID: id
     }, function (err, response) {
-       // console.log(response);
+        // console.log(response);
         if (err) {
             return res.json(err);
         }
@@ -607,14 +631,13 @@ exports.searchComic = function (req, res) {
     Comic.find({
         Season_ID: id
     }, function (err, response) {
-       // console.log(response);
+        // console.log(response);
         if (err) {
             return res.json(err);
         }
-        for(var loop=0;loop<response.length;loop++)
-{
- response[loop].Comic_Image='http://localhost:4000/'+ response[loop].Comic_Image;
- console.log(response[loop].Comic_Image);
+        for (var loop = 0; loop < response.length; loop++) {
+            response[loop].Comic_Image = 'http://localhost:4000/' + response[loop].Comic_Image;
+            console.log(response[loop].Comic_Image);
 
         }
         if ((response || []).length === 0) {

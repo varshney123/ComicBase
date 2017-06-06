@@ -13,9 +13,9 @@ export class Configuration {
         SeasonSearchUrl: 'http://192.168.14.144:4000/api/v1/SearchSeason/',
         UsersUrl: 'http://192.168.14.144:4000/api/v1/users',
         CheckUrl: 'http://192.168.14.144:4000/api/v1/Verify',
-        SearchUrl:'http://192.168.14.144:4000/api/v1/Search/',
-        CommentsUrl:'http://192.168.14.144:4000/api/v1/comments',
-        SearchCommentsUrl:'http://192.168.14.144:4000/api/v1/SearchComment/'
+        SearchUrl: 'http://192.168.14.144:4000/api/v1/Search/',
+        CommentsUrl: 'http://192.168.14.144:4000/api/v1/comments',
+        SearchCommentsUrl: 'http://192.168.14.144:4000/api/v1/SearchComment/'
     }
 
 

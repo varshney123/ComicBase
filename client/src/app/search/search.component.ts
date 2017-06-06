@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DataserviceService} from '../dataservice.service'
+import { DataserviceService } from '../dataservice.service'
 import { Router } from '@angular/router';
 import { ExchangeserviceService } from "app/exchangeservice.service";
 
@@ -15,16 +15,16 @@ export class SearchComponent implements OnInit {
   SearchDb() {
     this.search.GetSearch(this.SearchItem).subscribe(res => {
       console.log(res.status);
-    
+
       this.GetSearch = res;
       console.log(this.GetSearch);
       this.searchdata.SendSearchResult(this.GetSearch);
       console.log(this.GetSearch);
       this.router.navigate(['/displaysearch']);
-    } , errorr => {             // If there is an error it will alert an error.
-        alert(errorr);
-      });
-  
+    }, errorr => {             // If there is an error it will alert an error.
+      alert(errorr);
+    });
+
 
   }
   ngOnInit() {
