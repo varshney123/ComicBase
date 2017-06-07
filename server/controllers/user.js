@@ -6,8 +6,16 @@ var Comic = require("../models/comics");
 var FileSystem = require('fs');
 var Comment = require("../models/comments");
 var bcrypt = require('bcrypt');
-
-var jwt = require('jsonwebtoken');
+var nodemailer = require('nodemailer');
+//var nev=require('email-verification')
+var jwt = require('jsonwebtoken'); 
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'akashvarshney19@gmail.com',
+    pass: 'sidheshwar'
+  }
+});
 exports.postcomments = function (req, res) {
     var comment = new Comment({
         Comic_ID: req.body.Comic_ID,
@@ -64,16 +72,43 @@ exports.postusers = function (req, res) {
         UserType_ID: req.body.UserType_ID,
         username: req.body.username,
         password: req.body.password,
-        created_at: new Date(),
+        email:req.body.email,
+      //  verified:req.body.verified,
+       // code:req.body.code,
+     created_at: new Date(),
         updated_at: ""
     });
+    var rand,link;
+    
+
+    rand=Math.floor((Math.random() * 100) + 54);
+   
+    link="http://localhost:4000"+"/api/v1/verifyemail/"+rand;
+    console.log(link);
+    mailOptions={
+        to : user.email,
+        subject : "Please confirm your Email account",
+        html : "Hello,<br> Please Click on the link to verify your email.<br><a href="+link+">Click here to verify</a>" 
+    }
+    console.log(mailOptions);
+   transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+   });
+   
+   
     console.log(user.password);
     var salt = bcrypt.genSaltSync(10);
     console.log(salt);
     var hash = bcrypt.hashSync(user.password, salt);
     console.log(hash);
     user.password = hash;
-    user.save(function (err, response) {
+   user.verified=false;
+    user.code=rand;
+    user.save(function (err, resp) {
         if (err) {
             return res.json(req, res, err);
         }
@@ -81,13 +116,75 @@ exports.postusers = function (req, res) {
         res.json({
             "status": true,
             "respData": {
-                "data": response
+                "data": resp
             }
         }
         )
 
     });
 };
+
+
+
+exports.verifyemail = function (req, res) {
+    var id = req.params.id
+    User.findOne({
+            code: id
+        },
+        function (err, user) {
+            if (err) {
+                res.json({
+                    status: false,
+                    respData: {
+                        data: err
+                    }
+                });
+            }
+            user.verified = true;
+            user.code = '';
+            user.save(function (err, response) {
+                if (err) {
+                    res.json({
+                        status: false,
+                        respData: {
+                            data: err
+                        }
+                    });
+                }
+                res.json({
+                    status: true,
+                    respData: {
+                        data: "updated"
+                    }
+                });
+               // console.log(response.email);
+                var mailOptions = {
+
+                    from: 'akashvarshney19@gmail.com',
+                    to: response.email,
+                    subject: 'Sending Email using Node.js',
+                    text: 'you are registered with comic world'
+
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+            })
+        });
+
+
+
+
+}
+
+   
+
+
+
 
 exports.getusers = function (req, res) {
     User.find({}, function (err, response) {
@@ -307,6 +404,7 @@ exports.searchdata = function (req, res) {
         });
     })
 };
+
 exports.checkusers = function (req, res) {
     console.log("inside function 2");
     username1 = req.body.username;
@@ -314,42 +412,51 @@ exports.checkusers = function (req, res) {
 
     console.log(username1);
     User.find({
-        username: username1
-        //  password: password1
+        username: username1,
+
     }, function (err, response) {
         console.log(response);
-        console.log(password1);
-        console.log(response[0].password);
-        var result = bcrypt.compareSync(password1, response[0].password);
-        if (result == true) {
+        if (response[0].verified == true) {
+            var result = bcrypt.compareSync(password1, response[0].password);
+            if (result == true) {
 
 
-            if (err) {
-                res.json(err);
-            }
-            if (response) {
-                console.log("inside function");
-                console.log(req.body.username);
-                var mytoken = jwt.sign({ username: req.body.username }, 'check');
-                // var UserType_ID=response.
+                if (err) {
+                    res.json(err);
+                }
+                if (response) {
+                    console.log("inside function");
+                    console.log(req.body.username);
+                    var mytoken = jwt.sign({
+                        username: req.body.username
+                    }, 'check');
+                    // var UserType_ID=response.
+                    res.json({
+                        "status": true,
+                        "respData": {
+                            "response": response,
+                            "mytoken": mytoken
+                        }
+                    });
+                }
+            } else {
                 res.json({
-                    "status": true,
+                    "status": false,
                     "respData": {
-                        "response": response,
-                        "mytoken": mytoken
+                        "data": "user does not exist"
                     }
                 });
             }
-        }
-        else {
+        } else {
             res.json({
                 "status": false,
                 "respData": {
-                    "data": "user does not exist"
+                    "data": "user is not verified"
                 }
             });
         }
     });
+
 }
 exports.updateUsers = function (req, res) {
     var username = req.body.username;

@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
     },
 
       errorr => {
-        alert("Error");
+        alert("wrong credentials");
       });
 
 

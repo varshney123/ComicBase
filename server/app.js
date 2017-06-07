@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var expressJWT=require('express-jwt');
 var jwt=require('jsonwebtoken');
 var bcrypt = require('bcrypt');
+var nodemailer = require('nodemailer');
 //var Regex = require("regex");
 // Connect to the MongoDB
 mongoose.connect('mongodb://localhost:27017/AssnData');
@@ -17,8 +18,10 @@ var NODE_ENV = 'development';
 app.set('env', process.env.NODE_ENV || 'production');
 
 app.use(bodyParser.urlencoded({ extended: true }));
-var regex=RegExp(/\.(gif|jpg|jpeg|tiff|png)$/i);
-app.use(expressJWT({secret:'check'}).unless({path:['/api/v1/Verify','/api/v1/comics',regex]}));
+var regex=RegExp(/\.(gif|jpg|jpeg|tiff|png|ico)$/i);
+var regex2=RegExp("verifyemail");
+var regex3=RegExp("Search");
+app.use(expressJWT({secret:'check'}).unless({path:['/api/v1/Verify','/api/v1/comics',regex,regex2,regex3]}));
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(express.static(__dirname));
 routes = require('./routes/index')

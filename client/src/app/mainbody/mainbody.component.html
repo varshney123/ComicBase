@@ -1,37 +1,47 @@
-<!--<p>
-  mainbody works!
-</p>-->
 
-  <!--<div class="row">
-    <div class="col-md-2">
-      </div>
-      <h3 align="center">COMICS</h3>
-      
-       
-          <ul *ngFor="let item of Comics; let i = index">
-            <div class="col-md-4">-->
-          
-               <!--<li>{{item.Comic_Name}}</li>
-               <img src={{item.Comic_Image}} height="20%" width="30%">-->
-              
-              <!--</div>
-          </ul>
-       <div class="col-md-2">
-      </div>
-  </div>-->
-  
-  
-    <body>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="http://abovethelaw.com/wp-content/uploads/2015/04/game-of-thrones.jpg" alt="Los Angeles" style="height:500px;width:100%">
+    </div>
+
+    <div class="item">
+      <img src="https://images4.alphacoders.com/605/thumb-1920-60578.jpg" alt="Chicago" style="height:500px;width:100%">
+    </div>
+
+    <div class="item">
+      <img src="https://www.sideshowtoy.com/wp-content/uploads/2016/11/marvel-deadpool-heat-seeker-premium-format-feature-300511-1.jpg" style="height:500px;width:100%"></div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> 
+  <body>
   <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-4">
   </div>
   <div class="col-md-8">
     <div *ngFor="let item of Comics; let i = index">
        
-      <div class="thumbnail" style="background-color:black;border-radius:25px ">
+      <div class="thumbnail" style="background-color:transparent;border-radius:25px;width:50% ">
         <img src={{item.Comic_Image}} alt="Lights" height="225" width="300" class="img-circle">
-        <div class="caption" style="color:white">
-          {{item.Comic_Name}}
+        <div class="caption" style="color:black;background-color:white" align="center">
+          <label>Comic Name:</label>{{item.Comic_Name}}<br />
+          <label>Comic Story:</label>{{item.Comic_Data}}
           <br />
           
       </div>
@@ -41,5 +51,5 @@
   </div>
     </div>
 </div>
-    </body>
+  </body>
     

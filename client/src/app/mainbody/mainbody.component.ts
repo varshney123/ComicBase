@@ -12,6 +12,7 @@ export class MainbodyComponent implements OnInit {
   Series: any;
   Comics;
   constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService) { }
+  
   GetComicsList() {
     this.myservice.GetComics().subscribe(res => {
       this.Comics = res.respData.data;

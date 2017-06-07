@@ -17,10 +17,12 @@ export class SuperadminComponent implements OnInit {
   EditUser: {
     username: String,
     password: String,
+    email:String,
     UserType_ID: String
   } = {
     username: '',
     password: '',
+    email:'',
     UserType_ID: ''
   };
   constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route: Router) { }

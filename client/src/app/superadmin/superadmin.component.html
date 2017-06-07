@@ -5,21 +5,23 @@
   <table class="table table-striped">
     <thead>
       <th>UserName</th>
-      <th>Password</th>
+      
       <th>Type</th>
+       <th>email</th>
     </thead>
     <tbody>
       <tr *ngFor="let item of Users; let i = index">
         <td>{{item.username}}</td>
-        <td>{{item.password}}</td>
+        
          <td>{{item.UserType_ID}}</td>
+          <td>{{item.email}}</td>
          <button class="btn btn-success" (click)="OpenEditTab(item.username)">EDIT</button><td></td>
          <button class="btn btn-danger" (click)="DeleteUsers(item.username)"> DELETE</button>
       </tr>
     </tbody>
   </table>
  <button class="btn btn-success" (click)="OpenEditor()">ADD NEW USER</button> 
-  <button class="btn btn-success" (click)="Logout()">LOGOUT</button> 
+  <!--<button class="btn btn-success" (click)="Logout()">LOGOUT</button> -->
 </div>
 <div *ngIf="!flag">
 <div class="container">
@@ -53,6 +55,9 @@
 </div>
       <div class="form-group"> <label>Enter new Username:</label>
     <input type="text" name="username" #username placeholder="Enter new username" [(ngModel)]="EditUser.username">
+      </div>
+      <div class="form-group"> <label>Enter email-id:</label>
+    <input type="text" name="email" #email placeholder="Enter email" [(ngModel)]="EditUser.email">
       </div>
       <div class="form-group">
        <label>Enter  new password:</label>

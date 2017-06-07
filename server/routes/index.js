@@ -55,5 +55,7 @@ router.route('/v1/seasons/:_id')
 router.route('/v1/comics/:_id')
   .delete(userController.deleteComics)
 
-
+router.route('/v1/verifyemail/:id')
+  .get(userController.verifyemail)
+  
 module.exports = router;

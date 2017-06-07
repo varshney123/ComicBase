@@ -2,7 +2,7 @@
   seasons works!
 </p>-->
 
-<button (click)="GetSeasonList()">seasons</button>
+<button class="btn btn-info" (click)="GetSeasonList()">seasons</button>
 <div>
   <table class="table table-striped">
     <thead>
@@ -24,7 +24,7 @@
     </tbody>
   </table>
   <button class="btn btn-success" (click)="OpenEditor()">ADD NEW SEASON</button>
-  <button class="btn btn-success" (click)="Proceed()">PROCEED TO COMICS</button>
+  <!--<button class="btn btn-success" (click)="Proceed()">PROCEED TO COMICS</button>-->
 </div>
 <div *ngIf="!flag">
   <div class="container">
