@@ -168,6 +168,15 @@ export class DataserviceService {
     return this.httpService.put(this.UrlObject.UrlObj.ComicUrl, Data, options).map(
       (res: Response) => res.json());
   }
+  UpdateEmail(Data) {
+    console.log(localStorage.getItem('myToken'));
+    var token = localStorage.getItem('myToken');
+    let headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token });
+    let options = new RequestOptions({ headers: headers });
+    console.log(Data);
+    return this.httpService.put(this.UrlObject.UrlObj.UpdateEmailUrl, Data, options).map(
+      (res: Response) => res.json());
+  }
 
   DeleteUsers(Data) {
     console.log(localStorage.getItem('myToken'));

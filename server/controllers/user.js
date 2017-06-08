@@ -207,6 +207,7 @@ exports.postseries = function (req, res) {
         Series_ID: req.body.Series_ID,
         Series_Name: req.body.Series_Name,
         Series_Data: req.body.Series_Data,
+
         created_at: new Date(),
         updated_at: ""
     });
@@ -252,7 +253,36 @@ exports.postseasons = function (req, res) {
         created_at: new Date(),
         updated_at: ""
     });
+ var id=seasons.Series_ID;
+        console.log(id);
+     Series.findOne({
+        _id: id
+    }, function (err, response) {
+        if (err) {
+         res.json(req, res, err);
+        }  
+        if(response){
+        for (var loop = 0; loop < (response.Subscribers).length; loop++) {
+           console.log(response.Subscribers[loop]);
+ var mailOptions = {
 
+                    from: 'akashvarshney19@gmail.com',
+                    to: response.Subscribers[loop],
+                    subject: 'Sending Email using Node.js',
+                    text: 'new season is added'
+
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+        }
+    }
+     else{console.log("id didnt match");}  
+    })
     seasons.save(function (err, response) {
         if (err) {
             return res.json(req, res, err);
@@ -264,7 +294,7 @@ exports.postseasons = function (req, res) {
                 "data": response
             }
         })
-
+       
     });
 };
 
@@ -296,7 +326,35 @@ exports.postcomics = function (req, res) {
         created_at: new Date(),
         updated_at: ""
     });
+    var id=comic.Series_ID;
+        console.log(id);
+     Series.findOne({
+        _id: id
+    }, function (err, response) {
+        if (err) {
+         res.json(req, res, err);
+        }  
+        for (var loop = 0; loop < (response.Subscribers).length; loop++) {
+           console.log(response.Subscribers[loop]);
+ var mailOptions = {
 
+                    from: 'akashvarshney19@gmail.com',
+                    to: response.Subscribers[loop],
+                    subject: 'Sending Email using Node.js',
+                    text: 'new comic is added'
+
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+        }
+       
+       
+    })
     let image = comic.Comic_Image;
     let imageGroup = comic.Comic_Name;
     let matches = image.match(/^data:([A-Za-z-+/]+);base64,(.+)$/)
@@ -548,7 +606,33 @@ exports.updateSeries = function (req, res) {
         })
     })
 }
+exports.updateEmail= function (req, res) {
+    var _id = req.body._id;
+    Series.findOne({ _id: _id }, function (err, series) {
+        if (err) {
+            res.json(err);
+        }
+        var Subscribers = req.body.Subscribers;
+        console.log(Subscribers);
+        
+        
+        series.Subscribers.push(Subscribers);
+        series.updated_at = new Date();
 
+        series.save(function (err, response) {
+            if (err) {
+                res.json(err);
+            }
+
+            res.json({
+                "status": true,
+                "respData": {
+                    "data": response
+                }
+            });
+        })
+    })
+}
 exports.deleteSeries = function (req, res) {
     var _id = req.params._id;
     Series.findOne({ _id: _id }, function (err, series) {

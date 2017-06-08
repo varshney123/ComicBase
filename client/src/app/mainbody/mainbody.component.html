@@ -30,6 +30,7 @@
     <span class="sr-only">Next</span>
   </a>
 </div> 
+</div>
   <body>
   <div class="row">
   <div class="col-md-4">
@@ -43,6 +44,51 @@
           <label>Comic Name:</label>{{item.Comic_Name}}<br />
           <label>Comic Story:</label>{{item.Comic_Data}}
           <br />
+          
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-8">
+    <div *ngFor="let item of Series; let i = index">
+       
+      <div class="thumbnail" style="background-color:transparent;border-radius:25px;width:50% ">
+        <!--<img src={{item.Comic_Image}} alt="Lights" height="225" width="300" class="img-circle">-->
+        <div class="caption" style="color:black;background-color:white" align="center">
+          <label>Series Name:</label>{{item.Series_Name}}<br />
+          <label>Series ID:</label>{{item._id}}
+          <br />
+          <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="addid(item._id)">Subscribe</button>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Enter Email ID</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group"> <label>Enter email-id:</label>
+    <input type="text" name="email" #email placeholder="Enter email">
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="addemail(email.value)">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
           
       </div>
     </div>

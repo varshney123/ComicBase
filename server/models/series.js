@@ -5,6 +5,7 @@ var Series_Schema = new Schema({
     Series_ID: {type: Number},
     Series_Name: {type: String},
     Series_Data:{type:String},
+    Subscribers:{type:Array},
     created_at: {type: Date,default : Date.now},
     updated_at:""
 });

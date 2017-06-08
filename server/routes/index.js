@@ -57,5 +57,8 @@ router.route('/v1/comics/:_id')
 
 router.route('/v1/verifyemail/:id')
   .get(userController.verifyemail)
+
+router.route('/v1/updateemail')
+  .put(userController.updateEmail)  
   
 module.exports = router;

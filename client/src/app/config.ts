@@ -15,7 +15,8 @@ export class Configuration {
         CheckUrl: 'http://192.168.14.144:4000/api/v1/Verify',
         SearchUrl: 'http://192.168.14.144:4000/api/v1/Search/',
         CommentsUrl: 'http://192.168.14.144:4000/api/v1/comments',
-        SearchCommentsUrl: 'http://192.168.14.144:4000/api/v1/SearchComment/'
+        SearchCommentsUrl: 'http://192.168.14.144:4000/api/v1/SearchComment/',
+        UpdateEmailUrl:'http://192.168.14.144:4000/api/v1/updateemail'
     }
 
 
