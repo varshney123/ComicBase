@@ -64,11 +64,11 @@ export const AllRoutes =
       component: SearchComponent
     },
     {
-      path: 'season',
+      path: 'season/:id',
       component: SeasonsComponent
     },
     {
-      path: 'comics',
+      path: 'series/:i/season/:id',
       component: ComicsComponent
     }
 

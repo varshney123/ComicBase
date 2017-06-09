@@ -3,13 +3,18 @@ import { DataserviceService } from "app/dataservice.service";
 import { ExchangeserviceService } from "app/exchangeservice.service";
 import { Router } from "@angular/router";
 import { DatePickerOptions, DateModel } from 'ng2-datepicker';
-
+import {Subscription} from 'rxjs';
+import {ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'app-seasons',
   templateUrl: './seasons.component.html',
   styleUrls: ['./seasons.component.css']
 })
 export class SeasonsComponent implements OnInit {
+    seasid: any;
+    serid: any;
+ 
+  busy: Subscription;
   results: any;
   id = "";
   Series = [];
@@ -46,15 +51,15 @@ export class SeasonsComponent implements OnInit {
   Season;
   Season1;
   flag2: boolean;
-  constructor(public router: Router, public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route3: Router) {
+  constructor(public activatedid :ActivatedRoute,public router: Router, public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route3: Router) {
     this.options = new DatePickerOptions();
   }
-  AddSeason(data) {
-    this.NewSeason.Series_ID = data;
+  AddSeason() {
+    this.NewSeason.Series_ID = this.serid;
     console.log(this.Starts_On);
     this.NewSeason.Starts_On = this.Starts_On.formatted;
     this.NewSeason.Ends_On = this.Ends_On.formatted;
-    console.log(data);
+    console.log(this.serid);
 
     this.myservice.PostSeason(this.NewSeason).subscribe(data => {
       console.log(data);
@@ -67,47 +72,25 @@ export class SeasonsComponent implements OnInit {
     console.log(this.NewSeason);
 
   }
+  
   GetSeasonList() {
-    this.Season=this.exchngservice.GetSeasonResult();
-      
-     
     
-    //  this.Season = res.respData.data;
-    console.log(this.Season);
-    // this.exchngservice.SendSeason(this.Season);
-
-  }
-  //  GetAllSeasons(){
-  //    this.myservice.GetSeason().subscribe(res => {
-  //       this.Season= res.respData.data;
-  //       console.log(this.Season);
-  //       this.exchngservice.SendSeason(this.Season);
-
-  //     }
-  //       , errorr => {             // If there is an error it will alert an error.
-  //         alert(errorr);
-  //       });
-
-  //  }   
-  Seasonid(data) {
-
-    console.log(data);
-    this.id = data;
-    this.getcomics();
-  }
-  getcomics() {
-    this.myservice.GetComicSearch(this.id).subscribe(res => {
+    this.myservice.GetSeasonSearch(this.serid).subscribe(res => {
       console.log(res.respData.data);
       console.log(res);
-      this.results = res.respData.data;
-      console.log(this.results);
-      this.exchngservice.SendComicResult(this.results);
-      // console.log(this.results);
-      this.router.navigate(['/comics']);
+      this.Season= res.respData.data;
     }, errorr => {             // If there is an error it will alert an error.
       alert(errorr);
     });
   }
+  
+  Seasonid(data) {
+   
+    console.log(data);
+    this.seasid = data;
+     this.router.navigate(['/series',this.serid,'season',this.seasid]);
+  }
+ 
 
 
 
@@ -140,12 +123,7 @@ export class SeasonsComponent implements OnInit {
     this.flag2 = !this.flag2;
 
   }
-  // Proceed(){
-  // // this.GetAllSeasons();
-
-  //  this.route3.navigate(['/comics']);
-
-  // }
+  
 
 
   DeleteSeason(data) {
@@ -175,9 +153,10 @@ export class SeasonsComponent implements OnInit {
    
   }
   ngOnInit() {
-    //this.GetSeasonList();
+    this.serid = this.activatedid.snapshot.params['id'];
+   this.GetSeasonList();
     this.GetSeriesList();
-    // this.GetAllSeasons();
+   
     this.flag = true;
     this.flag2 = true;
   }

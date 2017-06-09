@@ -2,15 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { ExchangeserviceService } from "app/exchangeservice.service";
 import { DataserviceService } from "app/dataservice.service";
 import { Router } from "@angular/router";
-
+import {ActivatedRoute } from '@angular/router'
 @Component({
   selector: 'app-comics',
   templateUrl: './comics.component.html',
   styleUrls: ['./comics.component.css']
 })
 export class ComicsComponent implements OnInit {
+    serid: any;
+    seasid: any;
+    newid: any;
+    id: any;
   Series: any;
-  Seasons: any;
+  
   Season: any;
   base64: any;
   NewComic: {
@@ -36,10 +40,12 @@ export class ComicsComponent implements OnInit {
   Comic;
   Comic1;
   flag2: boolean;
-  constructor(public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route: Router) { }
-  AddComics(series, season) {
-    this.NewComic.Series_ID = series;
-    this.NewComic.Season_ID = season;
+  constructor(public activatedid :ActivatedRoute,public myservice: DataserviceService, public exchngservice: ExchangeserviceService, public route: Router) { }
+  AddComics() {
+    this.NewComic.Series_ID = this.serid;
+    this.NewComic.Season_ID = this.seasid;
+   // this.newid=series;
+    // this.GetSeasonList(this.newid);
     this.flag2 = !this.flag2;
     this.myservice.PostComic(this.NewComic).subscribe(data => {
       console.log(data);
@@ -51,9 +57,29 @@ export class ComicsComponent implements OnInit {
     )
     console.log(this.NewComic);
   }
+  // GetSeasonList(data) {
+    
+  //   this.myservice.GetSeasonSearch(data).subscribe(res => {
+  //     console.log(res.respData.data);
+  //     console.log(res);
+  //     this.Season= res.respData.data;
+  //   }, errorr => {             // If there is an error it will alert an error.
+  //     alert(errorr);
+  //   });
+  // }
   GetComicList() {
-    this.Comic = this.exchngservice.GetComicResult();
-    console.log(this.Comic);
+   
+    this.myservice.GetComicSearch(this.seasid).subscribe(res => {
+      console.log(res.respData.data);
+      console.log(res);
+      this.Comic = res.respData.data;
+      console.log(this.Comic);
+    
+     
+    }, errorr => {             // If there is an error it will alert an error.
+      alert(errorr);
+    });
+  
   }
   OpenEditTab(data) {
     console.log(data);
@@ -115,18 +141,6 @@ export class ComicsComponent implements OnInit {
     localStorage.removeItem("role");
     this.route.navigate(['/login']);
   }
-  GetAllSeasons() {
-    this.myservice.GetSeason().subscribe(res => {
-      this.Seasons = res.respData.data;
-      console.log(this.Seasons);
-      this.exchngservice.SendSeason(this.Seasons);
-
-    }
-      , errorr => {             // If there is an error it will alert an error.
-        alert(errorr);
-      });
-
-  }
   GetSeriesList() {
     this.myservice.GetSeries().subscribe(res => {
       this.Series = res.respData.data;
@@ -138,10 +152,27 @@ export class ComicsComponent implements OnInit {
         alert(errorr);
       });
   }
+  GetSeasonlist(){
+   
+    this.myservice.GetSeason().subscribe(res => {
+      this.Season = res.respData.data;
+      console.log(this.Season);
+
+
+    }
+      , errorr => {             // If there is an error it will alert an error.
+        alert(errorr);
+      });
+  }
+  
+   
   ngOnInit() {
-    this.GetAllSeasons();
+    this.serid=this.activatedid.snapshot.params['i'];
+    this.seasid = this.activatedid.snapshot.params['id'];
+    
+    this.GetSeasonlist()
     this.GetSeriesList();
-    //this.GetComicList();
+    this.GetComicList();
     this.flag = true;
     this.flag2 = true;
   }

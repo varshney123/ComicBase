@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Observable";
-import { CoolHttp } from 'angular2-cool-http';
+
+
+
 @Injectable()
 export class ExchangeserviceService {
+  
   Comic: any;
   Seasons: any;
   Users: any;
@@ -11,6 +14,9 @@ export class ExchangeserviceService {
   Season: any;
   Comics;
   DataObj;
+
+
+
   SendComics(Obj) {
     console.log(Obj);
     this.Comics = Obj;
@@ -67,15 +73,14 @@ export class ExchangeserviceService {
     console.log(this.Search);
     return this.Search;
   }
-  SendSeasonResult(Obj) {
+  Sendid(Obj) {
     console.log(Obj);
     this.Seasons = Obj;
     console.log(this.Seasons);
+    
   }
-
-
-  GetSeasonResult() {
-    // console.log(this.Seasons);
+Getid() {
+  
     return this.Seasons;
   }
 

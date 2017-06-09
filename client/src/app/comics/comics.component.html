@@ -1,7 +1,8 @@
 <!--<p>
   comics works!
 </p>-->
-<button (click)="GetComicList()">Comics</button>
+<br /><br /><br /><br />
+
 <div>
   <table class="table table-striped">
     <thead>
@@ -13,7 +14,7 @@
     <tbody>
       <tr *ngFor="let item of Comic; let i = index">
         <td>{{item.Comic_Name}}</td>
-        <td><img src={{item.Comic_Image}}></td>
+        <td><img src={{item.Comic_Image}} height="300px" width="300px"></td>
          <td>{{item.Comic_Data}}</td>
        
          <button class="btn btn-success" (click)="OpenEditTab(item._id)">EDIT</button><td></td>
@@ -46,16 +47,16 @@
 <div *ngIf="!flag2">
 <div class="container">
   
-    <form (ngSubmit)='AddComics(dropdown.value,dropdown2.value)' #DetailsForm='ngForm'>
+    <form (ngSubmit)='AddComics()' #DetailsForm='ngForm'>
    <div class="form-group">
     <input type="text" name="Comic" #Comic placeholder="Enter the Comic name" [(ngModel)]="NewComic.Comic_Name">
      </div>
-       <select #dropdown>
+       <!--<select #dropdown>
   <option  *ngFor="let item of Series" name="Series_Name" value={{item._id}}>{{item.Series_Name}}</option>
 </select>  
  <select #dropdown2>
-  <option  *ngFor="let item of Seasons" name="Season_Name" value={{item._id}}>{{item.Season_Name}}</option>
-</select>      
+  <option  *ngFor="let item of Season" name="Season_Name" value={{item._id}}>{{item.Season_Name}}</option>
+</select>      -->
     <!--<input type="text" name="Image" #Data placeholder="Enter Image" [(ngModel)]="NewComic.Comic_Image">-->
     <label for="single">Destination</label>
      <input type="file"  name="single" accept="image/*" (change)="changeListener($event)" />  

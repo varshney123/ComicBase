@@ -9,6 +9,8 @@ import { Router } from "@angular/router";
   styleUrls: ['./series.component.css']
 })
 export class SeriesComponent implements OnInit {
+    serid: any;
+    seriesid: any;
   id: any;
   results: any;
   flag: boolean;
@@ -31,7 +33,9 @@ export class SeriesComponent implements OnInit {
   GetSeriesList() {
     this.myservice.GetSeries().subscribe(res => {
       this.Series = res.respData.data;
-      console.log(this.Series);
+      
+
+      console.log(this.Series.seriesid);
       this.exchngservice.SendSeries(this.Series);
 
     }
@@ -96,22 +100,11 @@ export class SeriesComponent implements OnInit {
   Seriesid(data) {
 
     console.log(data);
-    this.id = data;
-    this.getseasons();
+    this.serid = data;
+   // this.exchngservice.Sendid(this.id);
+     this.router.navigate(['/season',this.serid]);
   }
-  getseasons() {
-    this.myservice.GetSeasonSearch(this.id).subscribe(res => {
-      console.log(res.respData.data);
-      console.log(res);
-      this.results = res.respData.data;
-      console.log(this.results);
-      this.exchngservice.SendSeasonResult(this.results);
-      // console.log(this.results);
-      this.router.navigate(['/season']);
-    }, errorr => {             // If there is an error it will alert an error.
-      alert(errorr);
-    });
-  }
+  
 
   ngOnInit() {
     this.GetSeriesList();

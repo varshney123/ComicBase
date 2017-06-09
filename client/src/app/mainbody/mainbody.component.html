@@ -1,4 +1,5 @@
-
+<div class="test">
+    <body>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -10,15 +11,15 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner">
     <div class="item active">
-      <img src="http://abovethelaw.com/wp-content/uploads/2015/04/game-of-thrones.jpg" alt="Los Angeles" style="height:500px;width:100%">
+      <img src="http://abovethelaw.com/wp-content/uploads/2015/04/game-of-thrones.jpg" style="height:600px" alt="Los Angeles" >
     </div>
 
     <div class="item">
-      <img src="https://images4.alphacoders.com/605/thumb-1920-60578.jpg" alt="Chicago" style="height:500px;width:100%">
+      <img src="https://images4.alphacoders.com/605/thumb-1920-60578.jpg" style="height:600px" alt="Chicago" >
     </div>
 
     <div class="item">
-      <img src="https://www.sideshowtoy.com/wp-content/uploads/2016/11/marvel-deadpool-heat-seeker-premium-format-feature-300511-1.jpg" style="height:500px;width:100%"></div>
+      <img src="https://www.sideshowtoy.com/wp-content/uploads/2016/11/marvel-deadpool-heat-seeker-premium-format-feature-300511-1.jpg" style="height:600px"></div>
 
   <!-- Left and right controls -->
   <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -31,7 +32,10 @@
   </a>
 </div> 
 </div>
-  <body>
+
+<br />
+
+    <br />
   <div class="row">
   <div class="col-md-4">
   </div>
@@ -47,8 +51,8 @@
           
       </div>
     </div>
-    <div class="col-md-2">
-    </div>
+    <!--<div class="col-md-2">
+    </div>-->
   </div>
     </div>
 </div>
@@ -65,7 +69,7 @@
           <label>Series ID:</label>{{item._id}}
           <br />
           <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="addid(item._id)">Subscribe</button>
+<button type="button" class="btn" data-toggle="modal" data-target="#myModal" (click)="addid(item._id)">Subscribe</button>
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -83,7 +87,7 @@
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="addemail(email.value)">Submit</button>
+        <button type="button" class="btn" data-dismiss="modal" (click)="addemail(email.value)">Submit</button>
       </div>
     </div>
 
@@ -92,10 +96,11 @@
           
       </div>
     </div>
-    <div class="col-md-2">
-    </div>
+    <!--<div class="col-md-2">
+    </div>-->
   </div>
     </div>
 </div>
   </body>
+</div>
     

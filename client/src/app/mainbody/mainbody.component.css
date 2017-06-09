@@ -1,3 +1,27 @@
 body{
     background-image: url("https://s-media-cache-ak0.pinimg.com/originals/42/c6/7a/42c67a0bc28730ca8f99c3f302ec272b.jpg")
 }
+.carousel-inner img {
+      -webkit-filter: grayscale(90%);
+      filter: grayscale(90%); /* make all photos black and white */ 
+      width: 100%; /* Set width to 100% */
+      margin: none;
+  }
+  .btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #f1f1f1;
+      border-radius: 0;
+      transition: .2s;
+  }
+  .btn:hover, .btn:focus {
+      border: 1px solid #333;
+      background-color: #fff;
+      color: #000;
+  }
+  
+
+  .test{
+      overflow: scroll;
+      overflow-y: hidden;
+  }
